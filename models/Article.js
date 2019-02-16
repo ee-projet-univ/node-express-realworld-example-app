@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 var slug = require('slug');
-var User = mongoose.model('User');
+var User = require('./User');
 
 var ArticleSchema = new mongoose.Schema({
   slug: {type: String, lowercase: true, unique: true},
@@ -12,7 +12,7 @@ var ArticleSchema = new mongoose.Schema({
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   tagList: [{ type: String }],
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-}, {timestamps: true});
+}, {timestamps: true, usePushEach: true});
 
 ArticleSchema.plugin(uniqueValidator, {message: 'is already taken'});
 
@@ -53,4 +53,4 @@ ArticleSchema.methods.toJSONFor = function(user){
   };
 };
 
-mongoose.model('Article', ArticleSchema);
+module.exports = mongoose.model('Article', ArticleSchema);

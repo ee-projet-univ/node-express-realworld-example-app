@@ -4,10 +4,10 @@ var CommentSchema = new mongoose.Schema({
   body: String,
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   article: { type: mongoose.Schema.Types.ObjectId, ref: 'Article' }
-}, {timestamps: true});
+}, { timestamps: true, usePushEach: true });
 
 // Requires population of author
-CommentSchema.methods.toJSONFor = function(user){
+CommentSchema.methods.toJSONFor = function (user) {
   return {
     id: this._id,
     body: this.body,
@@ -16,4 +16,4 @@ CommentSchema.methods.toJSONFor = function(user){
   };
 };
 
-mongoose.model('Comment', CommentSchema);
+module.exports = mongoose.model('Comment', CommentSchema);

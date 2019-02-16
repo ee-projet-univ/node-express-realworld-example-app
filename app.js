@@ -33,9 +33,10 @@ if (!isProduction) {
 if(isProduction){
   mongoose.connect(process.env.MONGODB_URI);
 } else {
-  mongoose.connect('mongodb://localhost/conduit');
+  mongoose.connect('mongodb://localhost/conduit', { useNewUrlParser: true });
   mongoose.set('debug', true);
 }
+mongoose.set('useCreateIndex', true)
 
 require('./models/User');
 require('./models/Article');
